@@ -12,7 +12,7 @@
 	 */
 	function createTodo(title) {
 		const randomId = Math.floor(Math.random() * (100_000 - 1 + 1) + 1);
-		todos[todos.length] = { title, completed: false, id: randomId };
+		todos = [{ title, completed: false, id: randomId }, ...todos];
 	}
 
 	/**
@@ -32,8 +32,8 @@
 	 * @type{(todoId: number) => void}
 	 */
 	function deleteTodo(todoId) {
-    todos = todos.filter(todo => todo.id !== todoId);
-  }
+		todos = todos.filter((todo) => todo.id !== todoId);
+	}
 </script>
 
 <h1>Svelte Todo app</h1>
