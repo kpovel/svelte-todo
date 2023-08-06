@@ -1,16 +1,19 @@
 <script>
-	/**
-	 * @type {(title: string) => void}
-	 */
-	export let createTodo;
+	import { createEventDispatcher } from 'svelte';
 
 	let todo = '';
+
+	const dispatch = createEventDispatcher();
+
+	function createTodo() {
+		dispatch('createTodo', { title: todo });
+	}
 </script>
 
 <form
 	on:submit|preventDefault={() => {
 		if (todo.trim()) {
-			createTodo(todo);
+			createTodo();
 			todo = '';
 		}
 	}}

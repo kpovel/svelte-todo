@@ -1,4 +1,6 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
+
 	/**@type{string}*/
 	export let title;
 	/**@type{boolean}*/
@@ -6,19 +8,19 @@
 	/**@type{number}*/
 	export let id;
 
-	/**
-	 * @type {(todoId: number) => void}
-	 */
-	export let toggleCopletion;
+	const dispatch = createEventDispatcher();
 
-	/**
-	 * @type{(todoId: number) => void}
-	 */
-	export let deleteTodo;
+	function toggleCopletion() {
+		dispatch('toggleCopletion', { todoId: id });
+	}
+
+	function deleteTodo() {
+		dispatch('deleteTodo', { todoId: id });
+	}
 </script>
 
 <p>Title: {title}</p>
 <p>Completed: {completed}</p>
-<button on:click={() => toggleCopletion(id)}>Toggle copletion</button>
+<button on:click={() => toggleCopletion()}>Toggle copletion</button>
 <p>Id: {id}</p>
-<button on:click={() => deleteTodo(id)}>Delete {title} todo</button>
+<button on:click={() => deleteTodo()}>Delete {title} todo</button>
