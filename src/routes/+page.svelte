@@ -3,7 +3,7 @@
 	import Todo from './Todo.svelte';
 	import Input from './input.svelte';
 
-  initTodoStore();
+	initTodoStore();
 </script>
 
 <h1>Svelte Todo app</h1>
@@ -15,7 +15,7 @@
 		title={todo.title}
 		completed={todo.completed}
 		id={todo.id}
-		on:toggleCopletion={todos.toggleCopletion}
+		on:toggleCopletion={(e) => todos.toggleCopletion(e, $todos)}
 		on:deleteTodo={todos.deleteTodo}
 	/>
 {/each}

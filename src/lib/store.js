@@ -19,26 +19,17 @@ function create_todo() {
 	}
 
 	/**
-	 * @type{(e:CustomEvent<{todoId: number}>) => void}
+	 * @param{CustomEvent<{todoId: number}>} todoId
+	 * @param{{title: string, completed: boolean, id: number}[]} todoList
 	 */
-	function toggleCopletion(e) {
-		/**
-		 * @type {{title: string, completed: boolean, id: number;}[]}
-		 */
-		let actualTodos = [];
-		const unsubscribe = todos.subscribe((value) => {
-			actualTodos = value;
-		});
-
-		const theTodo = actualTodos.find((todo) => todo.id === e.detail.todoId);
+	function toggleCopletion(todoId, todoList) {
+		const theTodo = todoList.find((todo) => todo.id === todoId.detail.todoId);
 		if (theTodo) {
 			theTodo.completed = !theTodo?.completed;
-			todos.set(actualTodos);
+			todos.set(todoList);
 		} else {
-			console.error(`Todo with ID ${e.detail.todoId} not found.`);
+			console.error(`Todo with ID ${todoId.detail.todoId} not found.`);
 		}
-
-		onDestroy(unsubscribe);
 	}
 
 	/**
@@ -82,8 +73,8 @@ export function initTodoStore() {
 	});
 
 	onDestroy(() => {
-    if (unsubscribe) {
-		unsubscribe();
-    }
+		if (unsubscribe) {
+			unsubscribe();
+		}
 	});
 }
