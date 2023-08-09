@@ -1,4 +1,4 @@
-import { onDestroy } from 'svelte';
+import { onDestroy, onMount } from 'svelte';
 import { writable } from 'svelte/store';
 
 function create_todo() {
@@ -52,8 +52,38 @@ function create_todo() {
 		subscribe: todos.subscribe,
 		createTodo,
 		toggleCopletion,
-		deleteTodo
+		deleteTodo,
+		/**
+		 * @type {(e: {title: string, completed: boolean, id: number}[]) => void}
+		 */
+		set: (v) => {
+			todos.set(v);
+		}
 	};
 }
 
 export const todos = create_todo();
+
+export function initTodoStore() {
+	/**
+	 * @type{import("svelte/store").Unsubscriber}
+	 */
+	let unsubscribe;
+	onMount(() => {
+		/**
+		 * @type {{title: string, completed: boolean, id: number}[]}
+		 */
+		const stored_todos = JSON.parse(localStorage.getItem('svelte_todo') || '[]');
+		todos.set(stored_todos);
+
+		unsubscribe = todos.subscribe((t) => {
+			localStorage.setItem('svelte_todo', JSON.stringify(t));
+		});
+	});
+
+	onDestroy(() => {
+    if (unsubscribe) {
+		unsubscribe();
+    }
+	});
+}

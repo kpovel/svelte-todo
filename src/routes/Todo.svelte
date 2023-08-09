@@ -21,6 +21,6 @@
 
 <p>Title: {title}</p>
 <p>Completed: {completed}</p>
-<button on:click={() => toggleCopletion()}>Toggle copletion</button>
+<button on:click={toggleCopletion}>Toggle copletion</button>
 <p>Id: {id}</p>
-<button on:click={() => deleteTodo()}>Delete {title} todo</button>
+<button on:click={deleteTodo}>Delete {title} todo</button>

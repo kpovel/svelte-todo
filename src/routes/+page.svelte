@@ -1,7 +1,9 @@
 <script>
-	import { todos } from '$lib/store';
+	import { initTodoStore, todos } from '$lib/store';
 	import Todo from './Todo.svelte';
 	import Input from './input.svelte';
+
+  initTodoStore();
 </script>
 
 <h1>Svelte Todo app</h1>
